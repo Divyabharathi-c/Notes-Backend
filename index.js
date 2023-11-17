@@ -22,8 +22,8 @@ databaseConnection();
 
 //routes
 app.use('/',userRouter);
-app.use('/fp', resetroute);
-app.use('/md',isAuth, noteRouter);
+app.use('/user', resetroute);
+app.use('/note',isAuth, noteRouter);
 
 app.get('/',(req,res)=>{
     res.send("Hello ! User This is Success message from Markdowm Server")
