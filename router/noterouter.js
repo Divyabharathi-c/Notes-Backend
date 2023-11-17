@@ -1,17 +1,17 @@
 import express from 'express';
-import { getAllUserDocs } from '../controllers/markcontrol.js';
-import { Mark } from '../models/mark.js';
+import { getAllUserDocs } from '../controllers/notecontrol.js';
+import { Note } from '../models/notes.js';
 
 const route = express.Router();
 
 // Get all user documents
 route.get('/all', async (req, res) => {
     try {
-        const mark = await getAllUserDocs(req);
-        if (!mark || mark.length <= 0) {
+        const note = await getAllUserDocs(req);
+        if (!note || note.length <= 0) {
             return res.status(404).json({ message: "Content not available" });
         }
-        res.status(200).json(mark);
+        res.status(200).json(note);
     } catch (error) {
         console.error(error); // Use console.error for logging errors
         res.status(500).json({ error: "Internal Server Error" });
@@ -23,7 +23,7 @@ route.post('/add', async (req, res) => {
     try {
         const { title, document } = req.body; // Destructure title and doc from req.body
 
-        const newdoc = new Mark({ title, document, user: req.user._id }); // Simplify document creation
+        const newdoc = new Note({ title, document, user: req.user._id }); // Simplify document creation
 
         await newdoc.save();
 
@@ -36,7 +36,7 @@ route.post('/add', async (req, res) => {
 
 route.get('/edit/:id', async (req, res) => {
     try {
-        const editdata = await Mark.findById(req.params.id);
+        const editdata = await Note.findById(req.params.id);
         if (editdata) {
             res.status(200).json(editdata);
         } else {
@@ -51,7 +51,7 @@ route.get('/edit/:id', async (req, res) => {
 route.put('/edit/:id', async (req, res) => {
     try {
         const { title, document } = req.body; // Destructure title and doc from req.body
-        const updatedDoc = await Mark.findByIdAndUpdate(req.params.id, { title, document }, { new: true });
+        const updatedDoc = await Note.findByIdAndUpdate(req.params.id, { title, document }, { new: true });
         res.status(200).json({ message: "Document Update Successful", updatedDoc });
     } catch (error) {
         console.error(error); // Use console.error for logging errors
@@ -62,7 +62,7 @@ route.put('/edit/:id', async (req, res) => {
 // Delete a user document
 route.delete('/delete/:id', async (req, res) => {
     try {
-        const deletedDoc = await Mark.findByIdAndDelete(req.params.id);
+        const deletedDoc = await Note.findByIdAndDelete(req.params.id);
         if (!deletedDoc) {
             return res.status(404).json({ message: "Document not found" });
         }
@@ -73,4 +73,4 @@ route.delete('/delete/:id', async (req, res) => {
     }
 });
 
-export const markRouter = route;
+export const noteRouter = route;

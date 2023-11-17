@@ -4,7 +4,7 @@ import cors from 'cors';
 import { databaseConnection } from './db.js';
 import { userRouter } from './router/userroute.js';
 import { resetroute } from './router/forgotroute.js';
-import { markRouter } from './router/markroute.js';
+import { noteRouter } from './router/noterouter.js';
 import { isAuth } from './middleware/auth.js';
 
 dotenv.config()
@@ -23,7 +23,7 @@ databaseConnection();
 //routes
 app.use('/',userRouter);
 app.use('/fp', resetroute);
-app.use('/md',isAuth, markRouter);
+app.use('/md',isAuth, noteRouter);
 
 app.get('/',(req,res)=>{
     res.send("Hello ! User This is Success message from Markdowm Server")

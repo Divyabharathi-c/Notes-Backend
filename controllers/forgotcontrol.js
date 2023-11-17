@@ -22,7 +22,8 @@ const forgotPassword = async (req, res) => {
     await user.save();
     
     //Send email with reset token  
-     const resetUrl = `${resetToken}`;
+    const feurl = process.env.FRONTEND_URL
+     const resetUrl = `${feurl}${resetToken}`;
     var transporter = createTransport({
         service: 'gmail',
         secure: true,
@@ -35,7 +36,7 @@ const forgotPassword = async (req, res) => {
     var mailOptions = {
         from: 'divyabharathi.csit@gmail.com',
         to: email,
-        subject: "Markdown Application Reset Password",
+        subject: "Notes Taking Application",
         html:`<h1>Click the Link to Reset Password</h1><h2>This Link expires in 2 hours</h2><h2>Click on the link to reset your password</h2><h3>${resetUrl}</h3>`
     };
 
