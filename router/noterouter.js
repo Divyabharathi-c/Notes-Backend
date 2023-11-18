@@ -21,9 +21,9 @@ route.get('/all', async (req, res) => {
 // Add a new user document
 route.post('/add', async (req, res) => {
     try {
-        const { title, document } = req.body; // Destructure title and doc from req.body
+        const { title, date,  document } = req.body; // Destructure title and doc from req.body
 
-        const newdoc = new Note({ title, document, user: req.user._id }); // Simplify document creation
+        const newdoc = new Note({ title, date, document, user: req.user._id }); // Simplify document creation
 
         await newdoc.save();
 
@@ -50,8 +50,8 @@ route.get('/edit/:id', async (req, res) => {
 // Edit a user document
 route.put('/edit/:id', async (req, res) => {
     try {
-        const { title, document } = req.body; // Destructure title and doc from req.body
-        const updatedDoc = await Note.findByIdAndUpdate(req.params.id, { title, document }, { new: true });
+        const { title, date,  document } = req.body; // Destructure title and doc from req.body
+        const updatedDoc = await Note.findByIdAndUpdate(req.params.id, { title, date, document }, { new: true });
         res.status(200).json({ message: "Document Update Successful", updatedDoc });
     } catch (error) {
         console.error(error); // Use console.error for logging errors
