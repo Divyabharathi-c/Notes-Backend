@@ -26,7 +26,7 @@ app.use('/user', resetroute);
 app.use('/note',isAuth, noteRouter);
 
 app.get('/',(req,res)=>{
-    res.send("Hello ! User This is Success message from Markdowm Server")
+    res.send("Hello ! User This is Success message from Notes taking application")
 })
 
 app.listen(PORT,()=>{console.log("Server is running in port ");});
